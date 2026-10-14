@@ -1,11 +1,27 @@
-﻿{
+{
   "name": "Auzlex Packages",
   "id": "io.github.auzlex.vpm",
   "url": "https://auzlex.github.io/vpm/index.json",
   "author": "Auzlex",
   "packages": {
     "io.github.auzlex.glim": {
-      "versions": {}
+      "versions": {
+        "0.9.1": {
+          "name": "io.github.auzlex.glim",
+          "version": "0.9.1",
+          "displayName": "Glim Lightmapper (Auzlex)",
+          "description": "Lightmap Baker",
+          "unity": "2022.3",
+          "url": "https://github.com/Auzlex/glim/releases/download/v0.9.1/io.github.auzlex.glim-0.9.1.zip",
+          "zipSHA256": "7e2cd3ef5beee289c5bff22fba6af77ff84660353f3446ec60f49f17d06d7b39",
+          "author": {
+            "name": "Auzlex",
+            "url": "https://github.com/Auzlex"
+          },
+          "vpmDependencies": {},
+          "gitDependencies": {}
+        }
+      }
     }
   }
 }
