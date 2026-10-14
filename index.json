@@ -1,0 +1,11 @@
+﻿{
+  "name": "Auzlex Packages",
+  "id": "io.github.auzlex.vpm",
+  "url": "https://auzlex.github.io/vpm/index.json",
+  "author": "Auzlex",
+  "packages": {
+    "io.github.auzlex.glim": {
+      "versions": {}
+    }
+  }
+}

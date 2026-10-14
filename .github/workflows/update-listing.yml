@@ -1,0 +1,106 @@
+﻿name: Update VPM Listing
+
+# Triggered by a repository_dispatch event fired from Auzlex/glim after a
+# successful release.  Can also be run manually to re-sync.
+on:
+  repository_dispatch:
+    types: [vpm-release]
+  workflow_dispatch:
+    inputs:
+      package_name:
+        description: 'Package ID (e.g. io.github.auzlex.glim)'
+        required: true
+        default: 'io.github.auzlex.glim'
+      version:
+        description: 'Version (e.g. 0.9.1)'
+        required: true
+      zip_url:
+        description: 'Direct URL to the release .zip'
+        required: true
+      zip_sha256:
+        description: 'SHA-256 of the zip (optional)'
+        required: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve inputs
+        id: inputs
+        run: |
+          # Prefer event payload (repository_dispatch), fall back to manual inputs
+          PKG="${{ github.event.client_payload.package_name || inputs.package_name }}"
+          VER="${{ github.event.client_payload.version       || inputs.version }}"
+          URL="${{ github.event.client_payload.zip_url       || inputs.zip_url }}"
+          SHA="${{ github.event.client_payload.zip_sha256    || inputs.zip_sha256 }}"
+          DISPLAY="${{ github.event.client_payload.display_name || '' }}"
+          DESC="${{ github.event.client_payload.description  || 'Lightmap Baker' }}"
+          UNITY="${{ github.event.client_payload.unity       || '2022.3' }}"
+
+          echo "pkg=$PKG"     >> "$GITHUB_OUTPUT"
+          echo "ver=$VER"     >> "$GITHUB_OUTPUT"
+          echo "url=$URL"     >> "$GITHUB_OUTPUT"
+          echo "sha=$SHA"     >> "$GITHUB_OUTPUT"
+          echo "display=$DISPLAY" >> "$GITHUB_OUTPUT"
+          echo "desc=$DESC"   >> "$GITHUB_OUTPUT"
+          echo "unity=$UNITY" >> "$GITHUB_OUTPUT"
+
+      - name: Inject version into index.json
+        run: |
+          PKG="${{ steps.inputs.outputs.pkg }}"
+          VER="${{ steps.inputs.outputs.ver }}"
+          URL="${{ steps.inputs.outputs.url }}"
+          SHA="${{ steps.inputs.outputs.sha }}"
+          DISPLAY="${{ steps.inputs.outputs.display }}"
+          DESC="${{ steps.inputs.outputs.desc }}"
+          UNITY="${{ steps.inputs.outputs.unity }}"
+
+          NEW_ENTRY=$(jq -n \
+            --arg name        "$PKG" \
+            --arg version     "$VER" \
+            --arg displayName "$DISPLAY" \
+            --arg description "$DESC" \
+            --arg unity       "$UNITY" \
+            --arg url         "$URL" \
+            --arg zipSHA256   "$SHA" \
+            '{
+              name:        $name,
+              version:     $version,
+              displayName: $displayName,
+              description: $description,
+              unity:       $unity,
+              url:         $url,
+              zipSHA256:   $zipSHA256,
+              author: {
+                name: "Auzlex",
+                url:  "https://github.com/Auzlex"
+              },
+              vpmDependencies: {},
+              gitDependencies: {}
+            }')
+
+          # Upsert: add/overwrite this version in .packages[$pkg].versions[$ver]
+          jq \
+            --arg pkg "$PKG" \
+            --arg ver "$VER" \
+            --argjson entry "$NEW_ENTRY" \
+            '.packages[$pkg].versions[$ver] = $entry' \
+            index.json > index.tmp.json
+
+          mv index.tmp.json index.json
+          echo "Updated index.json:"
+          cat index.json
+
+      - name: Commit & push
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.json
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "vpm: add ${{ steps.inputs.outputs.pkg }}@${{ steps.inputs.outputs.ver }}"
+          git push
