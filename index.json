@@ -13,7 +13,7 @@
           "description": "Lightmap Baker",
           "unity": "2022.3",
           "url": "https://github.com/Auzlex/glim/releases/download/v0.9.1/io.github.auzlex.glim-0.9.1.zip",
-          "zipSHA256": "7e2cd3ef5beee289c5bff22fba6af77ff84660353f3446ec60f49f17d06d7b39",
+          "zipSHA256": "",
           "author": {
             "name": "Auzlex",
             "url": "https://github.com/Auzlex"
