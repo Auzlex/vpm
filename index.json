@@ -35,6 +35,21 @@
           },
           "vpmDependencies": {},
           "gitDependencies": {}
+        },
+        "0.9.4": {
+          "name": "io.github.auzlex.glim",
+          "version": "0.9.4",
+          "displayName": "Glim Lightmapper (Auzlex)",
+          "description": "Lightmap Baker",
+          "unity": "2022.3",
+          "url": "https://github.com/Auzlex/glim/releases/download/v0.9.4/io.github.auzlex.glim-0.9.4.zip",
+          "zipSHA256": "0eadf7b5c0b6e2ce40a21959623dde6ab6f8c9e90316024681e6b45a3dc2ec59",
+          "author": {
+            "name": "Auzlex",
+            "url": "https://github.com/Auzlex"
+          },
+          "vpmDependencies": {},
+          "gitDependencies": {}
         }
       }
     }
