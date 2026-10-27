@@ -1,4 +1,4 @@
-﻿# Auzlex VPM Listing
+# Auzlex VPM Listing
 
 VRChat Creator Companion / ALCOM package repository for Auzlex packages.
 
@@ -17,10 +17,12 @@ https://auzlex.github.io/vpm/index.json
 | Package | ID | Description |
 |---------|-----|-------------|
 | Glim Lightmapper (Auzlex) | `io.github.auzlex.glim` | Fork of z3y/glim with LOD shadow/lighting fixes |
+| VRC Light Volumes | `red.sim.lightvolumes` | Optimized voxel-based and analytic lighting solution for VRChat with DMX bridge support |
 
 ## Source Repositories
 
 - **Glim fork**: https://github.com/Auzlex/glim
+- **Subsystem-VRCLightVolumes**: https://github.com/Auzlex/Subsystem-VRCLightVolumes
 
 ---
 

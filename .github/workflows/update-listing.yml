@@ -1,18 +1,18 @@
-﻿name: Update VPM Listing
+name: Update VPM Listing
 
-# Triggered by a repository_dispatch event fired from Auzlex/glim after a
-# successful release.  Can also be run manually to re-sync.
+# Triggered by a repository_dispatch event fired from Auzlex packages after a
+# successful release. Can also be run manually to re-sync.
 on:
   repository_dispatch:
     types: [vpm-release]
   workflow_dispatch:
     inputs:
       package_name:
-        description: 'Package ID (e.g. io.github.auzlex.glim)'
+        description: 'Package ID (e.g. io.github.auzlex.glim or red.sim.lightvolumes)'
         required: true
-        default: 'io.github.auzlex.glim'
+        default: 'red.sim.lightvolumes'
       version:
-        description: 'Version (e.g. 0.9.1)'
+        description: 'Version (e.g. 3.0.1)'
         required: true
       zip_url:
         description: 'Direct URL to the release .zip'
@@ -39,16 +39,20 @@ jobs:
           URL="${{ github.event.client_payload.zip_url       || inputs.zip_url }}"
           SHA="${{ github.event.client_payload.zip_sha256    || inputs.zip_sha256 }}"
           DISPLAY="${{ github.event.client_payload.display_name || '' }}"
-          DESC="${{ github.event.client_payload.description  || 'Lightmap Baker' }}"
+          DESC="${{ github.event.client_payload.description  || 'VRC Package' }}"
           UNITY="${{ github.event.client_payload.unity       || '2022.3' }}"
+          AUTHOR_NAME="${{ github.event.client_payload.author_name || 'Auzlex' }}"
+          AUTHOR_URL="${{ github.event.client_payload.author_url   || 'https://github.com/Auzlex' }}"
 
-          echo "pkg=$PKG"     >> "$GITHUB_OUTPUT"
-          echo "ver=$VER"     >> "$GITHUB_OUTPUT"
-          echo "url=$URL"     >> "$GITHUB_OUTPUT"
-          echo "sha=$SHA"     >> "$GITHUB_OUTPUT"
-          echo "display=$DISPLAY" >> "$GITHUB_OUTPUT"
-          echo "desc=$DESC"   >> "$GITHUB_OUTPUT"
-          echo "unity=$UNITY" >> "$GITHUB_OUTPUT"
+          echo "pkg=$PKG"                 >> "$GITHUB_OUTPUT"
+          echo "ver=$VER"                 >> "$GITHUB_OUTPUT"
+          echo "url=$URL"                 >> "$GITHUB_OUTPUT"
+          echo "sha=$SHA"                 >> "$GITHUB_OUTPUT"
+          echo "display=$DISPLAY"         >> "$GITHUB_OUTPUT"
+          echo "desc=$DESC"               >> "$GITHUB_OUTPUT"
+          echo "unity=$UNITY"             >> "$GITHUB_OUTPUT"
+          echo "author_name=$AUTHOR_NAME" >> "$GITHUB_OUTPUT"
+          echo "author_url=$AUTHOR_URL"   >> "$GITHUB_OUTPUT"
 
       - name: Inject version into index.json
         run: |
@@ -59,6 +63,8 @@ jobs:
           DISPLAY="${{ steps.inputs.outputs.display }}"
           DESC="${{ steps.inputs.outputs.desc }}"
           UNITY="${{ steps.inputs.outputs.unity }}"
+          AUTHOR_NAME="${{ steps.inputs.outputs.author_name }}"
+          AUTHOR_URL="${{ steps.inputs.outputs.author_url }}"
 
           NEW_ENTRY=$(jq -n \
             --arg name        "$PKG" \
@@ -68,6 +74,8 @@ jobs:
             --arg unity       "$UNITY" \
             --arg url         "$URL" \
             --arg zipSHA256   "$SHA" \
+            --arg authorName  "$AUTHOR_NAME" \
+            --arg authorUrl   "$AUTHOR_URL" \
             '{
               name:        $name,
               version:     $version,
@@ -77,8 +85,8 @@ jobs:
               url:         $url,
               zipSHA256:   $zipSHA256,
               author: {
-                name: "Auzlex",
-                url:  "https://github.com/Auzlex"
+                name: $authorName,
+                url:  $authorUrl
               },
               vpmDependencies: {},
               gitDependencies: {}
