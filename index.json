@@ -92,7 +92,7 @@
           "description": "Fork of Red Sims optimised voxel-based and analytic lighting solution for VRChat, slightly modified for internal Subsystem usage",
           "unity": "2022.3",
           "url": "https://github.com/Auzlex/Subsystem-VRCLightVolumes/releases/download/v3.0.1/io.github.auzlex.subsystem-lightvolumes-3.0.1.zip",
-          "zipSHA256": "9e480279559cb929550db7e014218c69faf42050ebc26d04c469c730418033fb",
+          "zipSHA256": "3047aa1e4479c38741af3b5eb23a4c798b975c8be9cdfc42813c614c9d82fca6",
           "author": {
             "name": "Auzlex (original: RED_SIM)",
             "url": "https://github.com/Auzlex"
