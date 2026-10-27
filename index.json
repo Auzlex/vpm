@@ -83,7 +83,7 @@
         }
       }
     },
-    "red.sim.lightvolumes": {
+    "io.github.auzlex.subsystem-lightvolumes": {
       "versions": {}
     }
   }
