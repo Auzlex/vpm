@@ -4,9 +4,10 @@ VRChat Creator Companion / ALCOM package repository for Auzlex packages.
 
 ## Add to VCC / ALCOM
 
-1. Open **VRChat Creator Companion** or **ALCOM**
-2. Go to **Settings → Packages → Add Repository**
-3. Paste the listing URL:
+[![Add to VCC](https://img.shields.io/badge/Add%20to%20VCC-blue?style=for-the-badge&logo=vrchat&logoColor=white)](https://vcc.docs.vrchat.com/vpm/repos/add/?url=https%3A%2F%2Fauzlex.github.io%2Fvpm%2Findex.json)
+[![Add to ALCOM](https://img.shields.io/badge/Add%20to%20ALCOM-purple?style=for-the-badge)](https://vrc-get.anatawa12.com/add-repo/?url=https%3A%2F%2Fauzlex.github.io%2Fvpm%2Findex.json)
+
+Or add manually — paste this URL in VCC/ALCOM under **Settings → Packages → Add Repository**:
 
 ```
 https://auzlex.github.io/vpm/index.json
