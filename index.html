@@ -17,22 +17,25 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #111214;
-      --surface:   #1a1b1e;
-      --surface2:  #222428;
-      --border:    #2e3035;
-      --accent:    #7c5cbf;
-      --accent-h:  #9370db;
-      --accent2:   #4a7fc1;
-      --text:      #e1e2e6;
-      --text-muted:#8b8d96;
-      --success:   #4caf50;
-      --radius:    8px;
+      --bg:          #111214;
+      --surface:     #1a1b1e;
+      --surface2:    #222428;
+      --border:      #2e3035;
+      --text:        #e1e2e6;
+      --text-muted:  #8b8d96;
+      --success:     #4caf50;
+      --radius:      10px;
+      --vcc-color:   #35b6d6;
+      --vcc-dark:    #1e8fb0;
+      --alcom-color: #03bd7c;
+      --alcom-dark:  #029962;
+      --accent-tag:  rgba(3,189,124,0.18);
+      --accent-tag-t:#03bd7c;
       --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
     html, body {
-      height: 100%;
+      min-height: 100%;
       background: var(--bg);
       color: var(--text);
       font-family: var(--font);
@@ -44,7 +47,7 @@
     .wrapper {
       max-width: 860px;
       margin: 0 auto;
-      padding: 48px 24px 80px;
+      padding: 52px 24px 88px;
     }
 
     /* ── Header ── */
@@ -52,33 +55,23 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
-    .header-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .header-icon svg { width: 24px; height: 24px; fill: #fff; }
+    .header-icon { display: none; }
 
     .header h1 {
-      font-size: 1.55rem;
+      font-size: 1.6rem;
       font-weight: 700;
       letter-spacing: -0.02em;
+      color: var(--text);
     }
 
     .subtitle {
       color: var(--text-muted);
-      font-size: 0.9rem;
-      margin-bottom: 36px;
-      padding-left: 58px;
+      font-size: 0.88rem;
+      margin-bottom: 40px;
+      padding-left: 0;
     }
 
     /* ── Add repo card ── */
@@ -90,65 +83,78 @@
       margin-bottom: 36px;
     }
 
-    .add-card h2 {
-      font-size: 1rem;
-      font-weight: 600;
+    .add-card-label {
+      font-size: 0.75rem;
+      font-weight: 700;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.07em;
-      margin-bottom: 18px;
+      letter-spacing: 0.09em;
+      margin-bottom: 16px;
     }
 
+    /* ── Buttons ── */
     .btn-row {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-bottom: 22px;
+      margin-bottom: 24px;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 11px 22px;
-      border-radius: var(--radius);
-      font-size: 0.95rem;
-      font-weight: 600;
+      gap: 10px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-weight: 700;
       text-decoration: none;
       cursor: pointer;
-      transition: filter 0.15s, transform 0.1s;
+      transition: filter 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
       white-space: nowrap;
+      border: none;
+      letter-spacing: 0.01em;
     }
 
-    .btn:hover  { filter: brightness(1.15); }
+    .btn:hover {
+      filter: brightness(1.12);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    }
     .btn:active { transform: scale(0.97); }
 
+    .btn-icon {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      flex-shrink: 0;
+      display: block;
+    }
+
+    /* VCC — cyan/teal matching #35b6d6 */
     .btn-vcc {
-      background: linear-gradient(135deg, #4a7fc1 0%, #2d5fa8 100%);
+      background: linear-gradient(135deg, var(--vcc-color) 0%, var(--vcc-dark) 100%);
       color: #fff;
     }
 
+    /* ALCOM — green matching #03bd7c */
     .btn-alcom {
-      background: linear-gradient(135deg, var(--accent) 0%, #5b3e96 100%);
+      background: linear-gradient(135deg, var(--alcom-color) 0%, var(--alcom-dark) 100%);
       color: #fff;
     }
 
-    .btn svg { width: 18px; height: 18px; fill: currentColor; flex-shrink: 0; }
-
-    /* ── Manual URL ── */
+    /* ── Manual URL box ── */
     .manual-label {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
       margin-bottom: 8px;
     }
 
     .url-box {
       display: flex;
-      align-items: center;
-      gap: 0;
+      align-items: stretch;
       background: var(--surface2);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border-radius: 8px;
       overflow: hidden;
     }
 
@@ -157,174 +163,207 @@
       padding: 10px 14px;
       font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
       font-size: 0.82rem;
-      color: #b0b8c8;
+      color: #a8c0d8;
       white-space: nowrap;
       overflow-x: auto;
+      display: block;
+      line-height: 1.5;
     }
 
     .copy-btn {
       flex-shrink: 0;
-      background: var(--surface);
+      background: transparent;
       border: none;
       border-left: 1px solid var(--border);
       color: var(--text-muted);
-      padding: 10px 14px;
+      padding: 0 14px;
       cursor: pointer;
-      font-size: 0.8rem;
-      font-weight: 600;
+      font-size: 0.78rem;
+      font-weight: 700;
       transition: color 0.15s, background 0.15s;
       display: flex;
       align-items: center;
       gap: 5px;
+      letter-spacing: 0.03em;
     }
 
     .copy-btn:hover { background: var(--border); color: var(--text); }
     .copy-btn.copied { color: var(--success); }
-    .copy-btn svg { width: 14px; height: 14px; fill: currentColor; }
 
-    /* ── Package table ── */
+    .copy-btn svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* ── Section title ── */
     .section-title {
-      font-size: 1rem;
+      font-size: 0.75rem;
       font-weight: 700;
-      margin-bottom: 14px;
-      color: var(--text);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      margin-bottom: 12px;
+    }
+
+    /* ── Package table ──
+       border-collapse:collapse kills border-radius, so we use
+       border-separate + border-spacing:0 + clip the wrapper instead.     */
+    .pkg-table-wrap {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;          /* clips the table corners cleanly        */
+      background: var(--surface);
     }
 
     .pkg-table {
       width: 100%;
-      border-collapse: collapse;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
+      border-collapse: separate;
+      border-spacing: 0;
     }
 
     .pkg-table th {
       text-align: left;
-      font-size: 0.78rem;
-      font-weight: 600;
+      font-size: 0.72rem;
+      font-weight: 700;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      padding: 12px 16px;
+      letter-spacing: 0.07em;
+      padding: 9px 16px;
       border-bottom: 1px solid var(--border);
       background: var(--surface2);
     }
 
     .pkg-table td {
-      padding: 14px 16px;
+      padding: 10px 16px;
       vertical-align: top;
+      font-size: 0.875rem;
       border-bottom: 1px solid var(--border);
-      font-size: 0.88rem;
+      background: var(--surface);
     }
 
-    .pkg-table tr:last-child td { border-bottom: none; }
-    .pkg-table tbody tr:hover { background: rgba(255,255,255,0.025); }
+    .pkg-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .pkg-table tbody tr:hover td {
+      background: rgba(255,255,255,0.03);
+    }
 
     .pkg-name {
       font-weight: 600;
       color: var(--text);
       display: block;
-      margin-bottom: 2px;
+      margin-bottom: 1px;
     }
 
     .pkg-id {
       font-family: "SFMono-Regular", Consolas, monospace;
-      font-size: 0.75rem;
+      font-size: 0.73rem;
       color: var(--text-muted);
+      display: block;
+      margin-bottom: 2px;
     }
 
     .pkg-desc {
       color: var(--text-muted);
-      font-size: 0.82rem;
+      font-size: 0.78rem;
+      line-height: 1.35;
     }
 
     .badge-version {
       display: inline-block;
       background: var(--surface2);
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 2px 8px;
+      border-radius: 5px;
+      padding: 2px 9px;
       font-family: "SFMono-Regular", Consolas, monospace;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: var(--text-muted);
       white-space: nowrap;
+      vertical-align: middle;
     }
 
     .source-tag {
-      display: inline-block;
-      background: rgba(124,92,191,0.18);
-      color: var(--accent-h);
-      border-radius: 4px;
-      padding: 2px 8px;
-      font-size: 0.75rem;
-      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--accent-tag);
+      color: var(--accent-tag-t);
+      border-radius: 5px;
+      padding: 3px 9px;
+      font-size: 0.74rem;
+      font-weight: 700;
       white-space: nowrap;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .source-tag:hover {
+      background: rgba(3,189,124,0.3);
+      text-decoration: none;
     }
 
     /* ── Footer ── */
     .footer {
-      margin-top: 56px;
+      margin-top: 60px;
       padding-top: 24px;
       border-top: 1px solid var(--border);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
       text-align: center;
+      line-height: 1.7;
     }
 
-    .footer a { color: var(--text-muted); }
-    .footer a:hover { color: var(--text); }
+    .footer a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+    .footer a:hover { color: var(--text); text-decoration: underline; }
 
     /* ── Responsive ── */
     @media (max-width: 580px) {
+      .wrapper { padding: 32px 16px 64px; }
+      .subtitle { padding-left: 0; }
+      .add-card { padding: 20px 16px 18px; }
       .pkg-table th:nth-child(3),
       .pkg-table td:nth-child(3) { display: none; }
-      .subtitle { padding-left: 0; }
     }
   </style>
 </head>
 <body>
 <div class="wrapper">
 
-  <!-- Header -->
+  <!-- ── Header ── -->
   <div class="header">
-    <div class="header-icon">
-      <!-- Package/box icon -->
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M20.5 7.28l-8-4.5a1 1 0 0 0-1 0l-8 4.5A1 1 0 0 0 3 8.12v7.76a1 1 0 0 0 .5.87l8 4.5a1 1 0 0 0 1 0l8-4.5a1 1 0 0 0 .5-.87V8.12a1 1 0 0 0-.5-.84ZM12 4.82l5.95 3.3L12 11.41 6.05 8.12Zm-7 4.7 6 3.37v6.64l-6-3.37zm8 10.01v-6.64l6-3.37v6.64z"/>
-      </svg>
-    </div>
     <h1>Auzlex Packages</h1>
   </div>
   <p class="subtitle">VRChat Creator Companion &amp; ALCOM package repository</p>
 
-  <!-- Add repo card -->
+  <!-- ── Add repository card ── -->
   <div class="add-card">
-    <h2>Add Repository</h2>
+    <p class="add-card-label">Add Repository</p>
     <div class="btn-row">
+
       <!-- VCC button -->
       <a class="btn btn-vcc"
          href="vcc://vpm/addRepo?url=https%3A%2F%2Fauzlex.github.io%2Fvpm%2Findex.json">
-        <!-- VCC / puzzle icon -->
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4.5 11H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1.5h8V6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-1.5v2H21a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-1.5H8V18a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h1.5z"/>
-        </svg>
+        <img class="btn-icon" src="vcc.svg" alt="" />
         Add to VCC
       </a>
 
       <!-- ALCOM button -->
       <a class="btn btn-alcom"
          href="vcc://vpm/addRepo?url=https%3A%2F%2Fauzlex.github.io%2Fvpm%2Findex.json">
-        <!-- Star / ALCOM icon -->
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2l2.93 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.07-1.01z"/>
-        </svg>
+        <img class="btn-icon alcom-btn-icon" src="alcom.svg" alt="" />
         Add to ALCOM
       </a>
+
     </div>
 
     <!-- Manual URL -->
-    <p class="manual-label">Or add manually in VCC / ALCOM → Settings → Packages → Add Repository:</p>
+    <p class="manual-label">Or paste manually into VCC / ALCOM → Settings → Packages → Add Repository:</p>
     <div class="url-box">
       <code id="repo-url">https://auzlex.github.io/vpm/index.json</code>
       <button class="copy-btn" id="copy-btn" onclick="copyUrl()" title="Copy URL">
@@ -336,88 +375,96 @@
     </div>
   </div>
 
-  <!-- Packages -->
+  <!-- ── Packages ── -->
   <p class="section-title">Available Packages</p>
-  <table class="pkg-table">
-    <thead>
-      <tr>
-        <th>Package</th>
-        <th>Latest</th>
-        <th>Source</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <span class="pkg-name">Glim Lightmapper</span>
-          <span class="pkg-id">io.github.auzlex.glim</span>
-          <br><span class="pkg-desc">Fork of z3y/glim with LOD shadow &amp; lighting fixes</span>
-        </td>
-        <td><span class="badge-version">0.11.1</span></td>
-        <td>
-          <a href="https://github.com/Auzlex/glim" class="source-tag" target="_blank" rel="noopener">
-            Auzlex/glim
-          </a>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <span class="pkg-name">VRC Light Volumes</span>
-          <span class="pkg-id">red.sim.lightvolumes</span>
-          <br><span class="pkg-desc">Subsystem fork of Red_SIM's voxel-based &amp; analytic lighting for VRChat</span>
-        </td>
-        <td><span class="badge-version">3.1.0-subsystem</span></td>
-        <td>
-          <a href="https://github.com/Auzlex/Subsystem-VRCLightVolumes" class="source-tag" target="_blank" rel="noopener">
-            Auzlex/Subsystem-VRCLightVolumes
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="pkg-table-wrap">
+    <table class="pkg-table">
+      <thead>
+        <tr>
+          <th>Package</th>
+          <th>Latest</th>
+          <th>Source</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <span class="pkg-name">Glim Lightmapper</span>
+            <span class="pkg-id">io.github.auzlex.glim</span>
+            <span class="pkg-desc">Fork of z3y/glim with LOD shadow &amp; lighting fixes</span>
+          </td>
+          <td><span class="badge-version">0.11.1</span></td>
+          <td>
+            <a href="https://github.com/Auzlex/glim" class="source-tag" target="_blank" rel="noopener">
+              Auzlex/glim
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="pkg-name">VRC Light Volumes</span>
+            <span class="pkg-id">red.sim.lightvolumes</span>
+            <span class="pkg-desc">Subsystem fork of Red_SIM's voxel-based &amp; analytic lighting for VRChat</span>
+          </td>
+          <td><span class="badge-version">3.1.0-subsystem</span></td>
+          <td>
+            <a href="https://github.com/Auzlex/Subsystem-VRCLightVolumes" class="source-tag" target="_blank" rel="noopener">
+              Auzlex/Subsystem&#8209;VRCLightVolumes
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-  <!-- Footer -->
+  <!-- ── Footer ── -->
   <div class="footer">
     <p>
-      Maintained by <a href="https://github.com/Auzlex" target="_blank" rel="noopener">Auzlex</a> ·
-      <a href="https://github.com/Auzlex/vpm" target="_blank" rel="noopener">View on GitHub</a> ·
+      Maintained by <a href="https://github.com/Auzlex" target="_blank" rel="noopener">Auzlex</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/Auzlex/vpm" target="_blank" rel="noopener">View on GitHub</a>
+      &nbsp;·&nbsp;
       Listing updated automatically via GitHub Actions
     </p>
   </div>
 
-</div>
+</div><!-- /wrapper -->
 
 <script>
   function copyUrl() {
-    const url = document.getElementById('repo-url').textContent.trim();
-    const btn = document.getElementById('copy-btn');
-    const label = document.getElementById('copy-label');
-    const icon = document.getElementById('copy-icon');
+    var url   = document.getElementById('repo-url').textContent.trim();
+    var btn   = document.getElementById('copy-btn');
+    var label = document.getElementById('copy-label');
+    var icon  = document.getElementById('copy-icon');
+    var checkPath = '<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>';
+    var copyPath  = '<path d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11z"/>';
 
-    navigator.clipboard.writeText(url).then(() => {
+    function showCopied() {
       btn.classList.add('copied');
       label.textContent = 'Copied!';
-      // Switch to checkmark icon
-      icon.innerHTML = '<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>';
-
-      setTimeout(() => {
+      icon.innerHTML = checkPath;
+      setTimeout(function() {
         btn.classList.remove('copied');
         label.textContent = 'Copy';
-        icon.innerHTML = '<path d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11z"/>';
+        icon.innerHTML = copyPath;
       }, 2000);
-    }).catch(() => {
-      // Fallback for older browsers
-      const el = document.createElement('textarea');
-      el.value = url;
-      el.style.position = 'absolute';
-      el.style.left = '-9999px';
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand('copy');
-      document.body.removeChild(el);
-      label.textContent = 'Copied!';
-      setTimeout(() => { label.textContent = 'Copy'; }, 2000);
-    });
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(showCopied).catch(function() { fallbackCopy(url, showCopied); });
+    } else {
+      fallbackCopy(url, showCopied);
+    }
+  }
+
+  function fallbackCopy(text, cb) {
+    var el = document.createElement('textarea');
+    el.value = text;
+    el.style.cssText = 'position:absolute;left:-9999px;top:-9999px;';
+    document.body.appendChild(el);
+    el.select();
+    try { document.execCommand('copy'); cb(); } catch(e) {}
+    document.body.removeChild(el);
   }
 </script>
 </body>
