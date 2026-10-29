@@ -22,8 +22,7 @@ https://auzlex.github.io/vpm/index.json
 | Package | ID | Description |
 |---------|-----|-------------|
 | Glim Lightmapper (Auzlex) | `io.github.auzlex.glim` | Fork of z3y/glim with LOD shadow/lighting fixes |
-| VRC Light Volumes (Auzlex's Subsystem Fork) | `io.github.auzlex.subsystem-lightvolumes` | Fork of Red_SIM's optimised voxel-based and analytic lighting solution for VRChat, modified for Subsystem usage |
-| VRC Light Volumes (Subsystem Fork) | `red.sim.lightvolumes` | Same fork distributed under the original package ID for compatibility |
+| VRC Light Volumes (Subsystem Fork) | `red.sim.lightvolumes` | Subsystem fork of Red_SIM's voxel-based & analytic lighting solution for VRChat |
 
 ## Source Repositories
 
