@@ -92,7 +92,7 @@
           "description": "Brings intuitive features and important visual elements for Hierarchy. Focused on solving most pain points and improving overall Unity workflow. Auzlex fork: fixes for Unity 2021+ context menu and icon reflection.",
           "unity": "2019.3",
           "url": "https://github.com/Auzlex/unity-smart-hierarchy-editor/releases/download/v0.3.2/com.av.smart-hierarchy-0.3.2.zip",
-          "zipSHA256": "",
+          "zipSHA256": "1fccbac6555bc4c91de760d40e6dd2eb7d397c5cf115974f89191a7891cd1b98",
           "author": {
             "name": "Auzlex (original: Alternative Visual)",
             "url": "https://github.com/Auzlex"
