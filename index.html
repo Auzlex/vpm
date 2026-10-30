@@ -386,33 +386,8 @@
           <th>Source</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>
-            <span class="pkg-name">Glim Lightmapper</span>
-            <span class="pkg-id">io.github.auzlex.glim</span>
-            <span class="pkg-desc">Fork of z3y/glim with LOD shadow &amp; lighting fixes</span>
-          </td>
-          <td><span class="badge-version">0.11.1</span></td>
-          <td>
-            <a href="https://github.com/Auzlex/glim" class="source-tag" target="_blank" rel="noopener">
-              Auzlex/glim
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span class="pkg-name">VRC Light Volumes</span>
-            <span class="pkg-id">red.sim.lightvolumes</span>
-            <span class="pkg-desc">Subsystem fork of Red_SIM's voxel-based &amp; analytic lighting for VRChat</span>
-          </td>
-          <td><span class="badge-version">3.1.0-subsystem</span></td>
-          <td>
-            <a href="https://github.com/Auzlex/Subsystem-VRCLightVolumes" class="source-tag" target="_blank" rel="noopener">
-              Auzlex/Subsystem&#8209;VRCLightVolumes
-            </a>
-          </td>
-        </tr>
+            <tbody id="pkg-tbody">
+        <tr><td colspan="3" style="text-align:center;color:var(--text-muted);padding:24px;">Loading&#8230;</td></tr>
       </tbody>
     </table>
   </div>
@@ -431,6 +406,65 @@
 </div><!-- /wrapper -->
 
 <script>
+  // ── Dynamic package table ──────────────────────────────────────────────────
+  (function () {
+    var tbody = document.getElementById('pkg-tbody');
+
+    // Map package id → GitHub repo path for the "Source" column
+    var repoMap = {
+      'io.github.auzlex.glim':    'Auzlex/glim',
+      'red.sim.lightvolumes':     'Auzlex/Subsystem-VRCLightVolumes',
+      'com.av.smart-hierarchy':   'Auzlex/unity-smart-hierarchy-editor'
+    };
+
+    fetch('index.json')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var pkgs = data.packages || {};
+        var rows = '';
+        Object.keys(pkgs).forEach(function(id) {
+          var versions = pkgs[id].versions || {};
+          // pick highest semver key (simple sort, works for our version strings)
+          var latestVer = Object.keys(versions).sort(function(a,b){
+            // compare semver segments numerically
+            var pa = a.replace(/[^0-9.]/g,'.').split('.').map(Number);
+            var pb = b.replace(/[^0-9.]/g,'.').split('.').map(Number);
+            for (var i=0; i<Math.max(pa.length,pb.length); i++){
+              var d = (pa[i]||0)-(pb[i]||0);
+              if (d) return d;
+            }
+            return 0;
+          }).pop();
+          var pkg  = versions[latestVer] || {};
+          var repo = repoMap[id] || '';
+          var repoUrl  = repo ? 'https://github.com/' + repo : '';
+          var repoText = repo ? repo.replace('Auzlex/', 'Auzlex/') : id;
+          var sourceCell = repoUrl
+            ? '<a href="' + repoUrl + '" class="source-tag" target="_blank" rel="noopener">' + esc(repoText) + '</a>'
+            : '<span class="source-tag">' + esc(id) + '</span>';
+          rows +=
+            '<tr>' +
+              '<td>' +
+                '<span class="pkg-name">'  + esc(pkg.displayName || id) + '</span>' +
+                '<span class="pkg-id">'    + esc(id) + '</span>' +
+                '<span class="pkg-desc">'  + esc(pkg.description || '') + '</span>' +
+              '</td>' +
+              '<td><span class="badge-version">' + esc(latestVer) + '</span></td>' +
+              '<td>' + sourceCell + '</td>' +
+            '</tr>';
+        });
+        tbody.innerHTML = rows || '<tr><td colspan="3" style="text-align:center;color:var(--text-muted)">No packages found.</td></tr>';
+      })
+      .catch(function() {
+        tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:var(--text-muted)">Failed to load packages.</td></tr>';
+      });
+
+    function esc(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+  })();
+  // ──────────────────────────────────────────────────────────────────────────
+
   function copyUrl() {
     var url   = document.getElementById('repo-url').textContent.trim();
     var btn   = document.getElementById('copy-btn');
